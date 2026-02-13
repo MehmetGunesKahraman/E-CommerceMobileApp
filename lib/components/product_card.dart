@@ -1,3 +1,4 @@
+import 'package:fluttapp/components/product_image.dart';
 import 'package:fluttapp/models/product_model.dart';
 import 'package:flutter/material.dart';
 
@@ -35,14 +36,12 @@ class ProductCard extends StatelessWidget {
             children: [
               Hero(
                 tag: product.id!,
-                child: ClipRRect(
-                  borderRadius: BorderRadiusGeometry.vertical(
+                child: ProductImage(
+                  image: product.image,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  borderRadius: BorderRadius.vertical(
                     top: Radius.circular(12),
-                  ),
-                  child: Image.network(
-                    product.image ?? '',
-                    width: double.infinity,
-                    fit: BoxFit.cover,
                   ),
                 ),
               ),

@@ -1,3 +1,4 @@
+import 'package:fluttapp/components/product_image.dart';
 import 'package:fluttapp/models/product_model.dart';
 import 'package:flutter/material.dart';
 
@@ -54,8 +55,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             children: [
               Hero(
                 tag: widget.product.id!,
-                child: Image.network(
-                  widget.product.image ?? "",
+                child: ProductImage(
+                  image: widget.product.image,
                   height: 350,
                   width: double.infinity,
                   fit: BoxFit.cover,

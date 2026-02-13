@@ -1,0 +1,96 @@
+{
+  "status": "ok",
+  "meta": {
+    "title": "Fallback Products",
+    "description": "Local product data used when the API is unavailable.",
+    "copyright": "Local",
+    "generated": "2026-02-13",
+    "count": 4
+  },
+  "data": [
+    {
+    "id": 1,
+    "name": "iPhone 15 Pro",
+    "tagline": "Titanium. So strong. So light. So Pro.",
+    "description": "The iPhone 15 Pro is the first iPhone to feature an aerospace-grade titanium design, making it lighter and more durable than ever before. It is powered by the groundbreaking A17 Pro chip, which delivers next-level gaming performance and efficiency. The device boasts a customizable Action button, replacing the traditional mute switch for quick access to your favorite features. Its pro-class camera system includes a 48MP Main camera and telephoto lenses for stunning photography in any light. Experience the future of smartphones with a display that pushes the limits of brightness.",
+    "price": "$999",
+    "currency": "USD",
+    "image": "assets/images/iphone15pro.png",
+    "specs": {
+        "chip": "A17 Pro",
+        "material": "Titanium",
+        "camera": "48MP Main"
+        }
+    },
+    {
+    "id": 2,
+    "name": "iPhone 15",
+    "tagline": "New camera. New design. Newphoria.",
+    "description": "The iPhone 15 features a stunning new design with color-infused back glass and a contoured aerospace-grade aluminum enclosure. It introduces the Dynamic Island, bubbling up alerts and live activities so you don’t miss them. The 48MP Main camera allows for super-high-resolution photos, while the 2x Telephoto option acts like a third camera. Powered by the A16 Bionic chip, it handles advanced computational photography with ease. Now with a USB-C connector, you can charge your Mac or iPad with the same cable.",
+    "price": "$799",
+    "currency": "USD",
+    "image": "assets/images/iphone15.png",
+    "specs": {
+        "chip": "A16 Bionic",
+        "material": "Aluminum",
+        "camera": "48MP Main"
+        }
+    },
+    {
+      "id": 3,
+      "name": "MacBook Pro 16",
+      "tagline": "Mind-blowing. Head-turning.",
+      "description": "The MacBook Pro 16-inch is the most advanced Mac laptop ever, powered by the M3 Max chip for extreme performance. Its Liquid Retina XDR display is mind-blowing, offering 1000 nits of sustained brightness for HDR content. With up to 22 hours of battery life, you can work on the most demanding projects all day long. It features a wide array of ports, including HDMI, SDXC, and MagSafe 3. This machine is designed for pros who need a laptop that can handle heavy workflows with ease.",
+      "price": "$2,499",
+      "currency": "USD",
+      "image": "assets/images/macpro16.png",
+      "specs": {
+        "display": "6.4 inch OLED",
+        "storage": "128GB",
+        "battery": "4500mAh"
+      }
+    },
+        {
+      "id": 4,
+      "name": "iPhone SE",
+      "tagline": "Love the power. Love the price.",
+      "description": "The iPhone SE packs the powerful A15 Bionic chip into a popular and compact design that fits perfectly in your pocket. It features a brilliant 4.7-inch Retina HD display and the home button you know and love with Touch ID. The advanced camera system features Smart HDR 4 and Deep Fusion for great photos. Durable by design, it has the toughest glass in a smartphone and is water and dust resistant. It is the most affordable way to get the incredible performance of an iPhone.",
+      "price": "$429",
+      "currency": "USD",
+      "image": "assets/images/iphonese.png",
+      "specs": {
+        "display": "6.4 inch OLED",
+        "storage": "128GB",
+        "battery": "4500mAh"
+      }
+    },
+    {
+      "id": 6,
+      "name": "iPhone 14",
+      "tagline": "Wonderfull.",
+      "description": "The iPhone 14 takes a huge leap in battery life and durability, making it a total powerhouse for its price. It features a ceramic shield front that is tougher than any smartphone glass. The advanced dual-camera system lets you take beautiful photos in any light, from bright sun to low-light scenes. Powered by the A15 Bionic chip with a 5-core GPU, it delivers lightning-fast performance. With Crash Detection, the iPhone 14 can call for help when you cannot.",
+      "price": "$699",
+      "currency": "USD",
+      "image": "assets/images/iphone14.png",
+      "specs": {
+        "display": "6.4 inch OLED",
+        "storage": "128GB",
+        "battery": "4500mAh"
+      }
+    },
+        {
+      "id": 7,
+      "name": "iPhone 15 Plus",
+      "tagline": "Huge screen. Huge battery life",
+      "description": "The iPhone 15 Plus offers a huge Super Retina XDR display that brings your content to life with vibrant colors and incredible detail. With its massive battery life, you can enjoy all-day usage without worrying about running out of power. The A16 Bionic chip ensures snappy performance for all your apps and games. Capture amazing photos with the advanced 48MP Main camera system, which now supports next-generation portraits. It is the perfect.",
+      "price": "$899",
+      "currency": "USD",
+      "image": "assets/images/iphone15plus.png",
+      "specs": {
+        "display": "6.4 inch OLED",
+        "storage": "128GB",
+        "battery": "4500mAh"
+      }
+    }
+  ]
+}

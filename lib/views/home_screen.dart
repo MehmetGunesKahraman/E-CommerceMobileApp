@@ -25,30 +25,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> fetchProducts() async {
     try {
-      setState(() {
-        isLoading = true;
-      });
+      if (allProducts.isEmpty) {
+        setState(() {
+          isLoading = true;
+        });
+      }
       ProductsModel data = await apiService.fetchProducts();
 
       setState(() {
         allProducts = data.data ?? [];
+        errorMassage = "";
       });
     } catch (e) {
       setState(() {
-        errorMassage = "Failed to load products. ${e.toString()}";
-        allProducts = [];
+        if (allProducts.isEmpty) {
+          errorMassage = "Failed to load products. ${e.toString()}";
+          allProducts = [];
+        }
       });
     } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _loadLocalProducts() async {
+    try {
+      final data = await apiService.loadLocalProducts();
+      if (!mounted) {
+        return;
+      }
       setState(() {
-        isLoading = false;
+        allProducts = data.data ?? [];
       });
+    } catch (_) {
+      // Ignore local load errors to allow network fetch to proceed.
     }
   }
 
   @override
   void initState() {
+    _loadLocalProducts();
     fetchProducts();
     super.initState();
+  }
+
+  double _parsePrice(String? price) {
+    if (price == null) return 0;
+    final cleaned = price.replaceAll(RegExp(r'[^\d.]'), '');
+    return double.tryParse(cleaned) ?? 0;
   }
 
   List<Data> _getSortedProducts() {
@@ -56,14 +84,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (_sortOption == "Price: Low to High") {
       displayProducts.sort((a, b) {
-        final priceA = double.tryParse(a.price ?? "0") ?? 0;
-        final priceB = double.tryParse(b.price ?? "0") ?? 0;
+        final priceA = _parsePrice(a.price);
+        final priceB = _parsePrice(b.price);
         return priceA.compareTo(priceB);
       });
     } else if (_sortOption == "Price: High to Low") {
       displayProducts.sort((a, b) {
-        final priceA = double.tryParse(a.price ?? "0") ?? 0;
-        final priceB = double.tryParse(b.price ?? "0") ?? 0;
+        final priceA = _parsePrice(a.price);
+        final priceB = _parsePrice(b.price);
         return priceB.compareTo(priceA);
       });
     }
@@ -177,9 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                    image: NetworkImage(
-                      "https://wantapi.com/assets/banner.png",
-                    ),
+                    image: AssetImage("assets/images/banner.png"),
                     fit: BoxFit.fitWidth,
                   ),
                 ),

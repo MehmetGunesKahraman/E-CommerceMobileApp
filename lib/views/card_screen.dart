@@ -1,3 +1,4 @@
+import 'package:fluttapp/components/product_image.dart';
 import 'package:fluttapp/models/product_model.dart';
 import 'package:fluttapp/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
@@ -58,13 +59,12 @@ class _CardScreenState extends State<CardScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadiusGeometry.circular(12),
-                                child: Image.network(
-                                  item.image!,
-                                  width: 70,
-                                  height: 70,
-                                ),
+                              ProductImage(
+                                image: item.image,
+                                width: 70,
+                                height: 70,
+                                fit: BoxFit.cover,
+                                borderRadius: BorderRadius.circular(12),
                               ),
 
                               SizedBox(width: 12),
