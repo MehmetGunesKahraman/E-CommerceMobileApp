@@ -2,6 +2,7 @@ import 'package:fluttapp/components/product_card.dart';
 import 'package:fluttapp/models/product_model.dart';
 import 'package:fluttapp/services/api_service.dart';
 import 'package:fluttapp/views/card_screen.dart';
+import 'package:fluttapp/views/favorites_screen.dart';
 import 'package:fluttapp/views/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String errorMassage = "";
   List<Data> allProducts = [];
   Set<int> cartIds = {};
+  Set<int> favoriteIds = {};
+  String _sortOption = "None";
 
   Future<void> fetchProducts() async {
     try {
@@ -32,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       setState(() {
-        errorMassage = "Failed to load products.";
+        errorMassage = "Failed to load products. ${e.toString()}";
+        allProducts = [];
       });
     } finally {
       setState(() {
@@ -45,6 +49,26 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     fetchProducts();
     super.initState();
+  }
+
+  List<Data> _getSortedProducts() {
+    final displayProducts = List<Data>.from(allProducts);
+
+    if (_sortOption == "Price: Low to High") {
+      displayProducts.sort((a, b) {
+        final priceA = double.tryParse(a.price ?? "0") ?? 0;
+        final priceB = double.tryParse(b.price ?? "0") ?? 0;
+        return priceA.compareTo(priceB);
+      });
+    } else if (_sortOption == "Price: High to Low") {
+      displayProducts.sort((a, b) {
+        final priceA = double.tryParse(a.price ?? "0") ?? 0;
+        final priceB = double.tryParse(b.price ?? "0") ?? 0;
+        return priceB.compareTo(priceA);
+      });
+    }
+
+    return displayProducts;
   }
 
   @override
@@ -64,20 +88,40 @@ class _HomeScreenState extends State<HomeScreen> {
                     "Discover",
                     style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CardScreen(
-                            products: allProducts,
-                            cartIds: cartIds,
-                          ),
-                        ),
-                      );
-                    },
-                    iconSize: 32,
-                    icon: Icon(Icons.shopping_bag_outlined),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FavoritesScreen(
+                                products: allProducts,
+                                favoriteIds: favoriteIds,
+                                cartIds: cartIds,
+                              ),
+                            ),
+                          );
+                        },
+                        iconSize: 30,
+                        icon: Icon(Icons.favorite_border),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CardScreen(
+                                products: allProducts,
+                                cartIds: cartIds,
+                              ),
+                            ),
+                          );
+                        },
+                        iconSize: 32,
+                        icon: Icon(Icons.shopping_bag_outlined),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -103,6 +147,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              SizedBox(height: 12),
+              DropdownButton<String>(
+                value: _sortOption,
+                isExpanded: false,
+                items: const [
+                  DropdownMenuItem(value: "None", child: Text("Sort by")),
+                  DropdownMenuItem(
+                    value: "Price: Low to High",
+                    child: Text("Price: Low to High"),
+                  ),
+                  DropdownMenuItem(
+                    value: "Price: High to Low",
+                    child: Text("Price: High to Low"),
+                  ),
+                ],
+                onChanged: (value) {
+                  if (value != null) {
+                    setState(() {
+                      _sortOption = value;
+                    });
+                  }
+                },
+              ),
               SizedBox(height: 16),
               Container(
                 width: double.infinity,
@@ -126,7 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
               else
                 Expanded(
                   child: GridView.builder(
-                    itemCount: allProducts.length,
+                    itemCount: _getSortedProducts().length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
@@ -134,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       childAspectRatio: 0.7,
                     ),
                     itemBuilder: (context, index) {
-                      final product = allProducts[index];
+                      final product = _getSortedProducts()[index];
 
                       return GestureDetector(
                         onTap: () {
@@ -144,11 +211,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context) => ProductDetailScreen(
                                 product: product,
                                 cartIds: cartIds,
+                                favoriteIds: favoriteIds,
                               ),
                             ),
                           );
                         },
-                        child: ProductCard(product: product),
+                        child: ProductCard(
+                          product: product,
+                          favoriteIds: favoriteIds,
+                          onFavoriteToggle: () {
+                            setState(() {
+                              final id = product.id!;
+                              if (favoriteIds.contains(id)) {
+                                favoriteIds.remove(id);
+                              } else {
+                                favoriteIds.add(id);
+                              }
+                            });
+                          },
+                        ),
                       );
                     },
                   ),

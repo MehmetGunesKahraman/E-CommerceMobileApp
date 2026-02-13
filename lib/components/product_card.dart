@@ -3,7 +3,15 @@ import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final Data product;
-  const ProductCard({super.key, required this.product});
+  final Set<int> favoriteIds;
+  final VoidCallback onFavoriteToggle;
+
+  const ProductCard({
+    super.key,
+    required this.product,
+    required this.favoriteIds,
+    required this.onFavoriteToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +31,42 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Hero(
-            tag: product.id!,
-            child: ClipRRect(
-              borderRadius: BorderRadiusGeometry.vertical(
-                top: Radius.circular(12),
+          Stack(
+            children: [
+              Hero(
+                tag: product.id!,
+                child: ClipRRect(
+                  borderRadius: BorderRadiusGeometry.vertical(
+                    top: Radius.circular(12),
+                  ),
+                  child: Image.network(
+                    product.image ?? '',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-              child: Image.network(
-                product.image ?? '',
-                width: double.infinity,
-                fit: BoxFit.cover,
+              Positioned(
+                right: 6,
+                top: 6,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.9),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: onFavoriteToggle,
+                    iconSize: 18,
+                    icon: Icon(
+                      favoriteIds.contains(product.id)
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: Colors.red.shade400,
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
 
           SizedBox(height: 2),

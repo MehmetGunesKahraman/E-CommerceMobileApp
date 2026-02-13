@@ -1,4 +1,5 @@
 import 'package:fluttapp/models/product_model.dart';
+import 'package:fluttapp/views/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 class CardScreen extends StatefulWidget {
@@ -107,21 +108,33 @@ class _CardScreenState extends State<CardScreen> {
                     ),
                   ),
 
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  minimumSize: Size(double.infinity, 45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+            if (cartProducts.isNotEmpty) ...[
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CheckoutScreen(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    minimumSize: Size(double.infinity, 45),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    "Checkout",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-                child: Text("Checkout", style: TextStyle(color: Colors.white)),
               ),
-            ),
+            ],
           ],
         ),
       ),

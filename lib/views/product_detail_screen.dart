@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class ProductDetailScreen extends StatefulWidget {
   final Data product;
   final Set<int> cartIds;
+  final Set<int> favoriteIds;
 
   const ProductDetailScreen({
     super.key,
     required this.product,
     required this.cartIds,
+    required this.favoriteIds,
   });
 
   @override
@@ -24,6 +26,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         title: Text("Back", style: TextStyle(color: Colors.black)),
         leadingWidth: 20,
         backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                final id = widget.product.id!;
+                if (widget.favoriteIds.contains(id)) {
+                  widget.favoriteIds.remove(id);
+                } else {
+                  widget.favoriteIds.add(id);
+                }
+              });
+            },
+            icon: Icon(
+              widget.favoriteIds.contains(widget.product.id)
+                  ? Icons.favorite
+                  : Icons.favorite_border,
+              color: Colors.red.shade400,
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(

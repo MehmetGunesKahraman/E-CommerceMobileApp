@@ -7,20 +7,20 @@ class ProductsModel {
 
   ProductsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
+    meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
+    if (meta != null) {
+      data['meta'] = meta!.toJson();
     }
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -53,12 +53,12 @@ class Meta {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['copyright'] = this.copyright;
-    data['generated'] = this.generated;
-    data['count'] = this.count;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['description'] = description;
+    data['copyright'] = copyright;
+    data['generated'] = generated;
+    data['count'] = count;
     return data;
   }
 }
@@ -93,19 +93,19 @@ class Data {
     currency = json['currency'];
     image = json['image'];
     specs = json['specs'] != null
-        ? new Map<String, String>.from(json['specs'])
+        ? Map<String, String>.from(json['specs'])
         : {};
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['tagline'] = this.tagline;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['currency'] = this.currency;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['tagline'] = tagline;
+    data['description'] = description;
+    data['price'] = price;
+    data['currency'] = currency;
+    data['image'] = image;
     return data;
   }
 }
